@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHS Web Development Club</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Favicons: SVG (preferred) with image fallback for older browsers -->
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="images/logo.jpg" type="image/jpeg" sizes="32x32">
+    <link rel="apple-touch-icon" href="images/logo.jpg">
+    <meta name="msapplication-TileImage" content="images/logo.jpg">
     <style>
         html { scroll-behavior: smooth; }
         #cursor-light {
@@ -75,9 +80,13 @@
         }
         /* reactive gradient button */
         .gradient-button {
-            background: linear-gradient(90deg, #DAA520, #FFD700, #003D7A);
-            background-size: 200% 200%;
+            background: linear-gradient(135deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #FFD700 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite;
             transition: background-position 0.5s, transform 0.2s;
+            color: white;
+            border: 2px solid rgba(218,165,32,0.08);
+            border-radius: 12px;
         }
         .gradient-button:hover {
             /* keep gradient position same, just scale */
@@ -86,13 +95,14 @@
 
         /* Animated blue ↔ gold join button with shine */
         .join-button {
-            background: linear-gradient(90deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #FFD700 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease-in-out infinite;
+            background: linear-gradient(135deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #FFD700 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease-in-out infinite;
             color: white;
             position: relative;
             overflow: hidden;
             border-radius: 12px;
+            border: 2px solid rgba(218,165,32,0.12);
             box-shadow: 0 10px 30px rgba(0,61,122,0.25), inset 0 -4px 10px rgba(0,0,0,0.18);
             transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms ease;
         }
@@ -340,6 +350,73 @@
             box-shadow: 0 20px 40px rgba(218, 165, 32, 0.2);
         }
 
+        /* Contact card style: subtle gold outline and left accent */
+        .contact-card {
+            position: relative;
+            border-radius: 12px;
+            border: 1px solid rgba(218,165,32,0.08);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+            overflow: hidden;
+            transition: transform 200ms ease, box-shadow 200ms ease;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, #003D7A 0%, #DAA520 100%);
+            z-index: 2;
+        }
+
+        .contact-card > * { position: relative; z-index: 3; }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 22px 48px rgba(0,0,0,0.6), 0 0 0 6px rgba(218,165,32,0.04);
+            border-color: rgba(218,165,32,0.28);
+        }
+
+        /* Navbar link accent to match contact cards */
+        .nav-link {
+            position: relative;
+            border-radius: 10px;
+            border: 1px solid rgba(218,165,32,0.06);
+            background-clip: padding-box;
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 56%;
+            background: rgba(255,255,255,0.06);
+            border-radius: 2px;
+            opacity: 0.6;
+            transition: background 200ms ease, opacity 200ms ease, transform 200ms ease, width 200ms ease;
+            z-index: -1; /* place the accent behind the button */
+        }
+
+        .nav-link:hover::before {
+            /* keep accent neutral on hover — no color change */
+            background: rgba(255,255,255,0.06);
+            opacity: 0.9;
+            width: 6px;
+            transform: translateY(-50%);
+        }
+
+        .nav-link:hover {
+            transform: translateY(-3px);
+            border-color: rgba(218,165,32,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 6px rgba(218,165,32,0.03);
+        }
+
         /* Animated Gradient Button Styles */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -360,6 +437,8 @@
             text-decoration: none;
             position: relative;
             overflow: hidden;
+            border: 2px solid rgba(218,165,32,0.08);
+            color: white;
         }
 
         .animated-gradient-button::before {
@@ -378,8 +457,14 @@
             left: 100%;
         }
 
+        .animated-gradient-button:hover {
+            transform: translateY(-4px);
+            border-color: rgba(218,165,32,0.7);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.35), 0 0 0 6px rgba(218,165,32,0.04);
+        }
+
         .animated-gradient-button-email {
-            background: linear-gradient(135deg, #003D7A, #DAA520, #003D7A);
+            background: linear-gradient(135deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #FFD700 100%);
             background-size: 300% 300%;
             animation: gradientShift 4s ease infinite;
             color: white;
@@ -392,11 +477,11 @@
         }
 
         .animated-gradient-button-sponsor {
-            background: linear-gradient(135deg, #DAA520, #FFD700, #DAA520);
+            background: linear-gradient(135deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #FFD700 100%);
             background-size: 300% 300%;
             animation: gradientShift 4s ease infinite;
-            color: #000;
-            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+            color: white;
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.25);
         }
 
         .animated-gradient-button-sponsor:hover {
@@ -405,9 +490,9 @@
         }
 
         .animated-gradient-button-social {
-            background: linear-gradient(135deg, #003D7A, #DAA520, #FFD700, #003D7A);
-            background-size: 400% 400%;
-            animation: gradientShift 5s ease infinite;
+            background: linear-gradient(135deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #FFD700 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite;
             color: white;
             box-shadow: 0 4px 15px rgba(0, 61, 122, 0.4);
         }
@@ -470,12 +555,12 @@
                     <div class="site-title">CHS Website Development Club</div>
                 </div>
                 <ul class="flex space-x-8">
-                    <li><a href="#home" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Home</a></li>
-                    <li><a href="#about" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">About</a></li>
-                    <li><a href="#projects" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Projects</a></li>
-                    <li><a href="#timeline" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Journey</a></li>
-                    <li><a href="#leaders" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Leaders</a></li>
-                    <li><a href="#contact" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Contact</a></li>
+                    <li><a href="#home" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm nav-link">Home</a></li>
+                    <li><a href="#about" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm nav-link">About</a></li>
+                    <li><a href="#projects" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm nav-link">Projects</a></li>
+                    <li><a href="#timeline" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm nav-link">Journey</a></li>
+                    <li><a href="#leaders" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm nav-link">Leaders</a></li>
+                    <li><a href="#contact" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm nav-link">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -532,6 +617,9 @@
             <div class="text-center mt-16">
                 <h3 class="text-3xl font-bold mb-4" style="color: #003D7A;">Ready to Start Coding?</h3>
                 <p class="text-xl" style="color: #DAA520;">Join us and turn your ideas into reality!</p>
+                <div class="mt-6">
+                    <a href="#contact" class="animated-gradient-button animated-gradient-button-email">Contact Us</a>
+                </div>
             </div>
         </div>
     </section>
@@ -640,22 +728,41 @@
                 <a href="mailto:dyoung@ccs.k12.in.us" class="animated-gradient-button animated-gradient-button-sponsor">
                     👩‍🏫 Faculty Sponsor
                 </a>
-                <a href="https://www.instagram.com/chs_webdevclub/" target="_blank" class="animated-gradient-button animated-gradient-button-social">
-                    📱 Follow Us
-                </a>
+            </div>
+
+            <div class="max-w-md mx-auto mb-8 animate-on-scroll delay-2">
+                <div class="bg-gray-800 rounded-lg p-6 card-hover contact-card flex items-center gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-12" fill="url(#instGradient)">
+                        <defs>
+                            <linearGradient id="instGradient" x1="0" x2="1">
+                                <stop offset="0" stop-color="#003D7A"/>
+                                <stop offset="1" stop-color="#DAA520"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="currentColor" d="M224.1 141c-63.6 0-115 51.4-115 115 0 63.6 51.4 115 115 115 63.6 0 115-51.4 115-115 0-63.6-51.4-115-115-115zm0 190.6c-41.9 0-75.6-33.7-75.6-75.6 0-41.9 33.7-75.6 75.6-75.6 41.9 0 75.6 33.7 75.6 75.6 0 41.9-33.7 75.6-75.6 75.6zM370.5 136.8c0 14.9-12 27-26.9 27-14.9 0-26.9-12.1-26.9-27 0-14.9 12-27 26.9-27 14.9 0 26.9 12.1 26.9 27zM398.8 80c-8.4-19.3-24.7-35.6-44-44C334.2 25 299.6 24 224 24s-110.2 1-130.8 12c-19.3 8.4-35.6 24.7-44 44C25 177.8 24 212.4 24 288s1 110.2 12 130.8c8.4 19.3 24.7 35.6 44 44 20.6 11 55.2 12 130.8 12s110.2-1 130.8-12c19.3-8.4 35.6-24.7 44-44 11-20.6 12-55.2 12-130.8s-1-110.2-12-130.8zM224 338c-56.6 0-102.6-46-102.6-102.6S167.4 132.8 224 132.8 326.6 178.8 326.6 235.4 280.6 338 224 338z"/>
+                    </svg>
+                    <div class="flex-1 text-left">
+                        <div class="text-lg font-semibold" style="color: #DAA520;">Official Instagram</div>
+                        <a href="https://www.instagram.com/chs_webdevclub/" target="_blank" rel="noopener noreferrer" aria-label="Open CHS WebDev Club Instagram profile" class="text-white font-bold hover:underline">@chs_webdevclub</a>
+                        <p class="text-sm text-gray-400 mt-1">Follow for project updates, events, and highlights.</p>
+                    </div>
+                    <div class="ml-4">
+                        <a href="https://www.instagram.com/chs_webdevclub/" target="_blank" rel="noopener noreferrer" class="animated-gradient-button animated-gradient-button-social">Visit</a>
+                    </div>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 animate-on-scroll delay-2">
-                <div class="bg-gray-800 rounded-lg p-6 card-hover">
+                <div class="bg-gray-800 rounded-lg p-6 card-hover contact-card">
                     <h3 class="text-lg font-semibold mb-3" style="color: #003D7A;">Email</h3>
                     <p style="color: #DAA520; word-break: break-all;">chswebdevclub@gmail.com</p>
                 </div>
-                <div class="bg-gray-800 rounded-lg p-6 card-hover">
+                <div class="bg-gray-800 rounded-lg p-6 card-hover contact-card">
                     <h3 class="text-lg font-semibold mb-3" style="color: #DAA520;">Faculty Sponsor</h3>
                     <p style="color: #DAA520;">Debra Young</p>
                     <p style="color: #DAA520; font-size: 0.9rem; word-break: break-all;">dyoung@ccs.k12.in.us</p>
                 </div>
-                <div class="bg-gray-800 rounded-lg p-6 card-hover">
+                <div class="bg-gray-800 rounded-lg p-6 card-hover contact-card">
                     <h3 class="text-lg font-semibold mb-3" style="color: #003D7A;">Social Media</h3>
                     <p style="color: #DAA520;">@chs_webdevclub</p>
                     <p style="color: rgba(218, 165, 32, 0.6); font-size: 0.9rem;">Instagram</p>
