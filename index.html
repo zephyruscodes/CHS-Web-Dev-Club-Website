@@ -20,18 +20,58 @@
             z-index: 9999;
             transition: transform 0.1s ease-out;
         }
-        /* animated gold and blue gradient for title */
+        /* animated blue <-> yellow gradient for title (smooth) */
         @keyframes hueShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         .animated-gradient {
-            background: linear-gradient(90deg, #DAA520, #FFD700, #003D7A, #DAA520);
-            background-size: 400% 400%;
-            animation: hueShift 8s ease infinite;
+            /* explicit stops to ensure smooth blue-to-yellow transition */
+            background: linear-gradient(90deg, #003D7A 0%, #003D7A 25%, #DAA520 50%, #DAA520 75%, #003D7A 100%);
+            background-size: 200% 200%;
+            animation: hueShift 6s ease-in-out infinite;
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: transparent;
+            will-change: background-position;
+        }
+        /* animated blue <-> yellow gradient for tagline text */
+        .tagline-gradient {
+            display: inline-block;
+            background: linear-gradient(90deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #DAA520 100%);
+            background-size: 200% 200%;
+            animation: hueShift 6s ease-in-out infinite;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            will-change: background-position;
+        }
+        /* Hero photo behind the main landing content */
+        .hero-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.95;
+            filter: brightness(0.45) contrast(1.05) saturate(0.95) blur(0px);
+            transform: scale(1.02);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
         }
         /* reactive gradient button */
         .gradient-button {
@@ -42,6 +82,50 @@
         .gradient-button:hover {
             /* keep gradient position same, just scale */
             transform: scale(1.05);
+        }
+
+        /* Animated blue ↔ gold join button with shine */
+        .join-button {
+            background: linear-gradient(90deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #FFD700 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,61,122,0.25), inset 0 -4px 10px rgba(0,0,0,0.18);
+            transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms ease;
+        }
+        .join-button::after {
+            /* rounded radial shine to avoid skew/aliasing ghosting */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 40%;
+            height: 160%;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0) 60%);
+            transform: translateX(-140%) translateY(-50%) scaleX(0.9);
+            transition: transform 0.75s cubic-bezier(.2,.8,.2,1), opacity 0.45s;
+            pointer-events: none;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            border-radius: 50%;
+            filter: blur(2px);
+            mix-blend-mode: screen;
+            opacity: 0.95;
+        }
+        .join-button:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 45px rgba(0,61,122,0.28), inset 0 -6px 14px rgba(0,0,0,0.22);
+        }
+        .join-button:hover::after {
+            transform: translateX(200%) translateY(-50%) scaleX(0.9);
+            opacity: 1;
+        }
+        .join-button:focus {
+            outline: 3px solid rgba(218,165,32,0.18);
+            outline-offset: 3px;
         }
 
         /* Animation Keyframes */
@@ -114,25 +198,28 @@
             }
         }
 
-        /* Animation Classes */
+        /* Animation Classes (use transitions so we don't override element animations) */
         .animate-on-scroll {
             opacity: 0;
+            transform: translateY(30px);
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
         }
 
         .animate-on-scroll.in-view {
-            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .animate-on-scroll.in-view.delay-1 {
-            animation-delay: 0.1s;
+            transition-delay: 0.1s;
         }
 
         .animate-on-scroll.in-view.delay-2 {
-            animation-delay: 0.2s;
+            transition-delay: 0.2s;
         }
 
         .animate-on-scroll.in-view.delay-3 {
-            animation-delay: 0.3s;
+            transition-delay: 0.3s;
         }
 
         .animate-fade {
@@ -337,6 +424,40 @@
             gap: 20px;
             margin: 40px 0;
         }
+        /* Site brand (logo + title) */
+        .site-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .site-logo {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 50%;
+            background: #ffffff;
+            display: inline-block;
+            border: 2px solid rgba(255,255,255,0.12);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+        }
+        @media (min-width: 768px) {
+            .site-logo { width: 56px; height: 56px; }
+        }
+        /* Animated gradient for small site title in navbar */
+        .site-title {
+            display: inline-block;
+            background: linear-gradient(90deg, #003D7A 0%, #003D7A 30%, #DAA520 70%, #DAA520 100%);
+            background-size: 200% 200%;
+            animation: hueShift 4s ease-in-out infinite;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-size: 1.125rem; /* 18px */
+            font-weight: 700;
+            line-height: 1;
+        }
+        /* Nav buttons are implemented with Tailwind utility classes on the elements. */
     </style>
 </head>
 <body class="bg-black text-white font-sans">
@@ -344,29 +465,38 @@
     <nav class="fixed top-0 w-full bg-black bg-opacity-90 backdrop-blur-md shadow-lg z-50 border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
-                <div class="text-2xl font-bold" style="color: #003D7A;">CHS Website Development Club</div>
+                <div class="site-brand">
+                    <img src="images/logo.jpg" alt="CHS Logo" class="site-logo" />
+                    <div class="site-title">CHS Website Development Club</div>
+                </div>
                 <ul class="flex space-x-8">
-                    <li><a href="#home" class="text-white transition duration-300 hover:" style="--tw-text-opacity: 1; color: rgb(255 255 255 / var(--tw-text-opacity));">Home</a></li>
-                    <li><a href="#about" class="text-white transition duration-300 hover:" style="--tw-text-opacity: 1; color: rgb(255 255 255 / var(--tw-text-opacity));">About</a></li>
-                    <li><a href="#projects" class="text-white transition duration-300 hover:" style="--tw-text-opacity: 1; color: rgb(255 255 255 / var(--tw-text-opacity));">Projects</a></li>
-                    <li><a href="#timeline" class="text-white transition duration-300 hover:" style="--tw-text-opacity: 1; color: rgb(255 255 255 / var(--tw-text-opacity));">Journey</a></li>
-                    <li><a href="#leaders" class="text-white transition duration-300 hover:" style="--tw-text-opacity: 1; color: rgb(255 255 255 / var(--tw-text-opacity));">Leaders</a></li>
-                    <li><a href="#contact" class="text-white transition duration-300 hover:" style="--tw-text-opacity: 1; color: rgb(255 255 255 / var(--tw-text-opacity));">Contact</a></li>
+                    <li><a href="#home" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Home</a></li>
+                    <li><a href="#about" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">About</a></li>
+                    <li><a href="#projects" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Projects</a></li>
+                    <li><a href="#timeline" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Journey</a></li>
+                    <li><a href="#leaders" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Leaders</a></li>
+                    <li><a href="#contact" class="inline-block px-3 py-2 rounded-lg bg-white/5 text-white font-semibold shadow-[0_8px_0_rgba(0,0,0,0.45),0_14px_30px_rgba(0,0,0,0.45)] transform transition-transform duration-200 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1 hover:shadow-[0_18px_30px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.995] focus:outline-none focus:ring-4 focus:ring-amber-300/20 backdrop-blur-sm">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-visible">
-        <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(0, 61, 122, 0.1), rgba(218, 165, 32, 0.1));"></div>
+        <picture aria-hidden="true">
+            <source srcset="images/ClubMembers.png" type="image/png">
+            <source srcset="images/ClubMembers.png" type="image/png">
+            <source srcset="images/ClubMembers.png" type="image/png">
+            <img class="hero-photo" src="images/ClubMembers.png" alt="CHS Web Dev Club members">
+        </picture>
+        <div class="absolute inset-0 hero-overlay" style="background: linear-gradient(to right, rgba(0, 61, 122, 0.15), rgba(0,0,0,0.35) 40%, rgba(218, 165, 32, 0.12));"></div>
         <div class="relative z-10 text-center px-8 md:px-4 w-full max-w-7xl">
             <h1 class="text-6xl md:text-8xl font-black mb-6 animated-gradient pr-4 animate-on-scroll">
                 The Syntax of Success
             </h1>
-            <p class="text-xl md:text-2xl mb-8 animate-on-scroll delay-1" style="color: #DAA520;">Join us to learn, build, and create amazing websites together. No experience required – just bring your passion!</p>
-            <p class="text-lg md:text-xl animate-on-scroll delay-2" style="color: rgba(218, 165, 32, 0.8);">We meet on Gold Wednesdays in room F108. Let's code the future!</p>
+            <p class="text-xl md:text-2xl mb-8 animate-on-scroll delay-1 tagline-gradient">Join us to learn, build, and create amazing websites together. No experience required – just bring your passion!</p>
+            <p class="text-lg md:text-xl animate-on-scroll delay-2" style="color: rgba(218, 165, 32, 0.8);">We meet on Gold Wednesdays in room F105. Let's code the future!</p>
             <div class="mt-8">
-                <a href="#about" class="gradient-button text-white px-10 py-4 rounded-lg font-semibold text-lg transition duration-300 animate-on-scroll delay-3">Join the Club</a>
+                <a href="#about" class="join-button text-white px-10 py-4 font-semibold text-lg transition duration-300 animate-on-scroll delay-3">Join the Club</a>
             </div>
         </div>
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -532,7 +662,7 @@
                 </div>
             </div>
 
-            <p style="color: rgba(218, 165, 32, 0.7);">Meetings on Gold Wednesdays, they will take place in room F108.</p>
+            <p style="color: rgba(218, 165, 32, 0.7);">Meetings on Gold Wednesdays, they will take place in room F105.</p>
         </div>
     </section>
 
