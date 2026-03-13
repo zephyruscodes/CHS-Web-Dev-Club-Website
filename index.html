@@ -40,6 +40,10 @@
             background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
+            /* prevent long phrases from being cut off when wrapping */
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: normal;
             will-change: background-position;
         }
         /* animated blue <-> yellow gradient for tagline text */
@@ -585,7 +589,7 @@
         </picture>
         <div class="absolute inset-0 hero-overlay" style="background: linear-gradient(to right, rgba(0, 61, 122, 0.15), rgba(0,0,0,0.35) 40%, rgba(218, 165, 32, 0.12));"></div>
         <div class="relative z-10 text-center px-8 md:px-4 w-full max-w-7xl">
-            <h1 class="text-6xl md:text-8xl font-black mb-6 animated-gradient pr-4 animate-on-scroll">
+            <h1 id="typewriter" class="text-6xl md:text-8xl font-black mb-6 animated-gradient pr-4 animate-on-scroll">
                 The Syntax of Success
             </h1>
             <p class="text-xl md:text-2xl mb-8 animate-on-scroll delay-1 tagline-gradient">Join us to learn, build, and create amazing websites together. No experience required – just bring your passion!</p>
