@@ -103,3 +103,29 @@ window.addEventListener('resize', updateTimelineLine);
 
 // Initial call
 updateTimelineLine();
+
+// Loading screen animation
+window.addEventListener('load', function() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingBar = document.getElementById('loading-bar');
+    const loadingText = document.getElementById('loading-text');
+    const mainContent = document.getElementById('main-content');
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 10 + 5; // Random progress between 5-15%
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            loadingText.textContent = 'CHS WEBSITE DEVELOPMENT CLUB ACTIVE';
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    mainContent.style.opacity = '1';
+                }, 500);
+            }, 300);
+        }
+        loadingBar.style.width = progress + '%';
+    }, 150);
+});
