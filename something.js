@@ -104,6 +104,25 @@ window.addEventListener('resize', updateTimelineLine);
 // Initial call
 updateTimelineLine();
 
+// Scroll progress bar
+function updateScrollProgress() {
+    const scrollProgress = document.getElementById('scroll-progress');
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    
+    scrollProgress.style.height = scrollPercent + '%';
+}
+
+// Update scroll progress on scroll
+window.addEventListener('scroll', updateScrollProgress);
+// Update on load and resize
+window.addEventListener('load', updateScrollProgress);
+window.addEventListener('resize', updateScrollProgress);
+
+// Initial call
+updateScrollProgress();
+
 // Loading screen animation
 window.addEventListener('load', function() {
     const loadingScreen = document.getElementById('loading-screen');

@@ -108,3 +108,9 @@ footer {
 #loading-screen {
     transition: opacity 0.5s ease;
 }
+
+/* Scroll progress bar styles */
+#scroll-progress {
+    box-shadow: -2px 0 8px rgba(0, 61, 122, 0.3);
+    border-radius: 0 2px 2px 0;
+}
