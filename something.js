@@ -148,3 +148,81 @@ window.addEventListener('load', function() {
         loadingBar.style.width = progress + '%';
     }, 150);
 });
+
+// Typewriter effect for the home tagline
+(function() {
+    const typewriterEl = document.getElementById('typewriter');
+    if (!typewriterEl) return;
+
+    const phrases = [
+        "Technical & Sharp",
+        "Building the Web, One Tag at a Time.",
+        "From Concept to Code.",
+        "Architects of the Digital Age.",
+        "Crafting the Modern Web.",
+        "The Syntax of Success.",
+        "Bold & Ambitious",
+        "Deploy Your Future.",
+        "Don’t Just Browse the Web—Build It.",
+        "Coding the Next Generation.",
+        "Your Ideas, Live on the Web.",
+        "Level Up Your Full-Stack Skills.",
+        "Creative & Fun",
+        "We Have the Best \"View Source.\"",
+        "Connecting the Dots (and the Divs).",
+        "Where Creativity Meets Code.",
+        "Ctrl + Alt + Create.",
+        "Inspect Element. Improve. Innovate.",
+        "Community Focused",
+        "Learn. Code. Collaborate.",
+        "A Community Built on Open Source.",
+        "Bridging the Gap Between Design and Development.",
+        "Commit to Something Great."
+    ];
+
+    const config = {
+        typeSpeed: 70,
+        deleteSpeed: 40,
+        pauseAfterTyping: 1600,
+        pauseAfterDeleting: 400
+    };
+
+    let phraseIndex = 0;
+    let isDeleting = false;
+
+    function updateText() {
+        const currentText = phrases[phraseIndex];
+        const displayed = typewriterEl.textContent;
+
+        if (!isDeleting) {
+            // Type forward
+            typewriterEl.textContent = currentText.slice(0, displayed.length + 1);
+            if (typewriterEl.textContent === currentText) {
+                isDeleting = true;
+                setTimeout(updateText, config.pauseAfterTyping);
+                return;
+            }
+            setTimeout(updateText, config.typeSpeed);
+        } else {
+            // Backspace
+            typewriterEl.textContent = currentText.slice(0, displayed.length - 1);
+            if (typewriterEl.textContent === '') {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(updateText, config.pauseAfterDeleting);
+                return;
+            }
+            setTimeout(updateText, config.deleteSpeed);
+        }
+    }
+
+    // Start when content is ready, and allow for the loading screen transition.
+    window.addEventListener('load', () => {
+        // Small delay so the loading screen can fade first
+        setTimeout(() => {
+            // Start with a clean slate so the typewriter animation is visible
+            typewriterEl.textContent = '';
+            updateText();
+        }, 1200);
+    });
+})();
