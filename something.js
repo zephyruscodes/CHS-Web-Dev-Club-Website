@@ -16,10 +16,10 @@ for (const link of links) {
 }
 
 // mouse follow light
-const cursorLight = document.getElementById('cursor-light');
-document.addEventListener('mousemove', (e) => {
-    cursorLight.style.transform = `translate(${e.clientX - 100}px, ${e.clientY - 100}px)`;
-});
+//const cursorLight = document.getElementById('cursor-light');
+//document.addEventListener('mousemove', (e) => {
+    //cursorLight.style.transform = `translate(${e.clientX - 100}px, ${e.clientY - 100}px)`;
+//});
 
 // Intersection Observer for scroll animations
 const observerOptions = {
