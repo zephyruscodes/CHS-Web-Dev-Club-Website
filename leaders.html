@@ -13,20 +13,6 @@
     <meta name="msapplication-TileImage" content="images/logo.jpg">
     <style>
         html { scroll-behavior: smooth; }
-        /*
-        #cursor-light {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(218, 165, 32, 0.3) 0%, rgba(0, 61, 122, 0.2) 50%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out;
-        }
-        */
         /* animated blue <-> yellow gradient for title (smooth) */
         @keyframes hueShift {
             0% { background-position: 0% 50%; }
@@ -549,10 +535,28 @@
             line-height: 1;
         }
         /* Nav buttons are implemented with Tailwind utility classes on the elements. */
+        /* Sticky footer layout */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #111827;
+        }
+        #main-content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #main-content > section {
+            flex: 1;
+        }
+        #leaders {
+            background: #090d16;
+        }
     </style>
 </head>
 <body class="bg-black text-white font-sans">
-    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50">
+    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50" style="display: none;">
         <img src="images/logo.jpg" alt="CHS Logo" class="w-32 h-32 mb-8 animate-pulse rounded-full">
         <div class="w-64 h-2 bg-gray-700 rounded-full overflow-hidden mb-4">
             <div id="loading-bar" class="h-full bg-gradient-to-r from-blue-500 to-yellow-500 rounded-full transition-all duration-300" style="width: 0%;"></div>
@@ -560,6 +564,12 @@
         <p id="loading-text" class="text-lg font-semibold text-white">CHS WEBSITE DEVELOPMENT CLUB LOADING</p>
         <p class="text-sm text-gray-400 mt-2">Initializing...</p>
     </div>
+    <script>
+        if (document.cookie.includes('chs_init_done=true')) {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-content').style.opacity = '1';
+        }
+    </script>
     <div id="cursor-light"></div>
     <div id="scroll-progress" class="fixed right-0 top-0 w-1 h-0 bg-gradient-to-b from-blue-500 to-yellow-500 z-40 transition-all duration-300"></div>
     <div id="main-content" class="opacity-0 transition-opacity duration-1000">
@@ -584,26 +594,26 @@
 
     <section id="leaders" class="py-20 px-4 bg-gray-900">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-black mb-16 animate-on-scroll">Meet Our Leaders</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <h2 class="text-4xl md:text-6xl font-black mb-16 pt-12 animate-on-scroll">Meet Our Leaders</h2>
+            <div class="grid grid-cols-1 mt-24 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="bg-gray-800 rounded-lg p-6 shadow-lg animate-on-scroll delay-1 card-hover">
                     <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #003D7A, #DAA520);">MY</div>
                     <h3 class="text-xl font-semibold mb-2">Mrs. Young</h3>
                     <p class="text-gray-400">Club Sponsor</p>
                 </div>
-                <div class="bg-gray-800 rounded-lg p-6 shadow-lg animate-on-scroll delay-2 card-hover">
-                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #DAA520, #FFD700);">KS</div>
-                    <h3 class="text-xl font-semibold mb-2">Yuvraj Kumar Singh</h3>
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg animate-on-scroll delay-3 card-hover">
+                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #FFD700, #003D7A);">YS</div>
+                    <h3 class="text-xl font-semibold mb-2">Yuvraj Singh</h3>
                     <p class="text-gray-400">Co-president</p>
                 </div>
                 <div class="bg-gray-800 rounded-lg p-6 shadow-lg animate-on-scroll delay-3 card-hover">
-                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #FFD700, #003D7A);">VM</div>
+                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #003D7A, #DAA520);">VM</div>
                     <h3 class="text-xl font-semibold mb-2">Vansh Mittal</h3>
                     <p class="text-gray-400">Co-president</p>
                 </div>
                 <div class="bg-gray-800 rounded-lg p-6 shadow-lg animate-on-scroll delay-3 card-hover">
-                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #003D7A, #DAA520);">N</div>
-                    <h3 class="text-xl font-semibold mb-2">Nathan</h3>
+                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #FFD700, #003D7A);">NY</div>
+                    <h3 class="text-xl font-semibold mb-2">Nathan Yu</h3>
                     <p class="text-gray-400">Co-president</p>
                 </div>
             </div>

@@ -13,20 +13,6 @@
     <meta name="msapplication-TileImage" content="images/logo.jpg">
     <style>
         html { scroll-behavior: smooth; }
-        /*
-        #cursor-light {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(218, 165, 32, 0.3) 0%, rgba(0, 61, 122, 0.2) 50%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out;
-        }
-        */
         /* animated blue <-> yellow gradient for title (smooth) */
         @keyframes hueShift {
             0% { background-position: 0% 50%; }
@@ -549,10 +535,29 @@
             line-height: 1;
         }
         /* Nav buttons are implemented with Tailwind utility classes on the elements. */
+        /* Sticky footer layout */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #111827;
+        }
+        #main-content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #main-content > section {
+            flex: 1;
+        }
+        #about {
+            flex: 1;
+            background: #090d16;
+        }
     </style>
 </head>
 <body class="bg-black text-white font-sans">
-    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50">
+    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50" style="display: none;">
         <img src="images/logo.jpg" alt="CHS Logo" class="w-32 h-32 mb-8 animate-pulse rounded-full">
         <div class="w-64 h-2 bg-gray-700 rounded-full overflow-hidden mb-4">
             <div id="loading-bar" class="h-full bg-gradient-to-r from-blue-500 to-yellow-500 rounded-full transition-all duration-300" style="width: 0%;"></div>
@@ -560,6 +565,12 @@
         <p id="loading-text" class="text-lg font-semibold text-white">CHS WEBSITE DEVELOPMENT CLUB LOADING</p>
         <p class="text-sm text-gray-400 mt-2">Initializing...</p>
     </div>
+    <script>
+        if (document.cookie.includes('chs_init_done=true')) {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-content').style.opacity = '1';
+        }
+    </script>
     <div id="cursor-light"></div>
     <div id="scroll-progress" class="fixed right-0 top-0 w-1 h-0 bg-gradient-to-b from-blue-500 to-yellow-500 z-40 transition-all duration-300"></div>
     <div id="main-content" class="opacity-0 transition-opacity duration-1000">
@@ -584,11 +595,11 @@
 
     <section id="about" class="py-20 px-4 bg-gray-900">
         <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-6xl font-black mb-4 animate-on-scroll">Why Join Our Club?</h2>
+            <div class="text-center mb-28">
+                <h2 class="text-4xl md:text-6xl font-black mb-4 pt-12 animate-on-scroll">Why Join Our Club?</h2>
                 <p class="text-xl max-w-3xl mx-auto animate-on-scroll delay-1" style="color: #DAA520;">Discover the world of web development in a fun, supportive environment. Whether you're a beginner or experienced, our club is the perfect place to grow your skills.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-28">
                 <div class="text-center animate-on-scroll delay-1">
                     <div class="text-6xl font-bold mb-4" style="color: #003D7A;">🚀</div>
                     <h3 class="text-2xl font-semibold mb-2">Learn New Skills</h3>
@@ -605,7 +616,7 @@
                     <p style="color: #DAA520;">Work on websites that make a difference in our community.</p>
                 </div>
             </div>
-            <div class="text-center mt-16">
+            <div class="text-center mt-28">
                 <h3 class="text-3xl font-bold mb-4" style="color: #003D7A;">Ready to Start Coding?</h3>
                 <p class="text-xl" style="color: #DAA520;">Join us and turn your ideas into reality!</p>
                 <div class="mt-6">

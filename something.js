@@ -123,12 +123,34 @@ window.addEventListener('resize', updateScrollProgress);
 // Initial call
 updateScrollProgress();
 
-// Loading screen animation
-window.addEventListener('load', function() {
+// Loading screen animation (only on first load per browser session)
+(function() {
     const loadingScreen = document.getElementById('loading-screen');
     const loadingBar = document.getElementById('loading-bar');
     const loadingText = document.getElementById('loading-text');
     const mainContent = document.getElementById('main-content');
+    
+    if (!loadingScreen || !loadingBar || !loadingText || !mainContent) return;
+    
+    // Only show loading screen on homepage
+    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+        mainContent.style.opacity = '1';
+        return;
+    }
+    
+    // Check for session cookie
+    const alreadyInitialized = document.cookie.includes('chs_init_done=true');
+    
+    if (alreadyInitialized) {
+        loadingBar.style.width = '100%';
+        loadingText.textContent = 'CHS WEBSITE DEVELOPMENT CLUB ACTIVE';
+        loadingScreen.style.display = 'none';
+        mainContent.style.opacity = '1';
+        return;
+    }
+    
+    // First load: show loading screen
+    loadingScreen.style.display = 'flex';
     
     let progress = 0;
     const interval = setInterval(() => {
@@ -137,6 +159,8 @@ window.addEventListener('load', function() {
             progress = 100;
             clearInterval(interval);
             loadingText.textContent = 'CHS WEBSITE DEVELOPMENT CLUB ACTIVE';
+            // Set session cookie (expires when browser closes)
+            document.cookie = 'chs_init_done=true; path=/; SameSite=Lax';
             setTimeout(() => {
                 loadingScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -147,7 +171,7 @@ window.addEventListener('load', function() {
         }
         loadingBar.style.width = progress + '%';
     }, 150);
-});
+})();
 
 // Typewriter effect for the home tagline
 (function() {
@@ -190,6 +214,20 @@ window.addEventListener('load', function() {
     let phraseIndex = 0;
     let isDeleting = false;
 
+    function updateHeight() {
+        const currentMinHeight = typewriterEl.style.minHeight;
+        typewriterEl.style.minHeight = 'auto';
+        const naturalHeightPx = typewriterEl.offsetHeight;
+        typewriterEl.style.minHeight = currentMinHeight;
+        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const extraPx = 2 * rootFontSize; // 2rem in px
+        const minHeightPx = naturalHeightPx + extraPx;
+        let minHeightRem = minHeightPx / rootFontSize;
+        // Ensure minimum height is at least the height for one line (9.2rem)
+        minHeightRem = Math.max(minHeightRem, 9.2);
+        typewriterEl.style.minHeight = minHeightRem + 'rem';
+    }
+
     function updateText() {
         const currentText = phrases[phraseIndex];
         const displayed = typewriterEl.textContent;
@@ -197,6 +235,7 @@ window.addEventListener('load', function() {
         if (!isDeleting) {
             // Type forward
             typewriterEl.textContent = currentText.slice(0, displayed.length + 1);
+            updateHeight();
             if (typewriterEl.textContent === currentText) {
                 isDeleting = true;
                 setTimeout(updateText, config.pauseAfterTyping);
@@ -206,6 +245,7 @@ window.addEventListener('load', function() {
         } else {
             // Backspace
             typewriterEl.textContent = currentText.slice(0, displayed.length - 1);
+            updateHeight();
             if (typewriterEl.textContent === '') {
                 isDeleting = false;
                 phraseIndex = (phraseIndex + 1) % phrases.length;

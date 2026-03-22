@@ -13,20 +13,6 @@
     <meta name="msapplication-TileImage" content="images/logo.jpg">
     <style>
         html { scroll-behavior: smooth; }
-        /*
-        #cursor-light {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(218, 165, 32, 0.3) 0%, rgba(0, 61, 122, 0.2) 50%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out;
-        }
-        */
         /* animated blue <-> yellow gradient for title (smooth) */
         @keyframes hueShift {
             0% { background-position: 0% 50%; }
@@ -549,10 +535,29 @@
             line-height: 1;
         }
         /* Nav buttons are implemented with Tailwind utility classes on the elements. */
+        /* Sticky footer layout */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #111827;
+        }
+        #main-content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #main-content > section {
+            flex: 1;
+        }
+        #contact {
+            flex: 1;
+            background: #090d16;
+        }
     </style>
 </head>
 <body class="bg-black text-white font-sans">
-    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50">
+    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50" style="display: none;">
         <img src="images/logo.jpg" alt="CHS Logo" class="w-32 h-32 mb-8 animate-pulse rounded-full">
         <div class="w-64 h-2 bg-gray-700 rounded-full overflow-hidden mb-4">
             <div id="loading-bar" class="h-full bg-gradient-to-r from-blue-500 to-yellow-500 rounded-full transition-all duration-300" style="width: 0%;"></div>
@@ -560,6 +565,12 @@
         <p id="loading-text" class="text-lg font-semibold text-white">CHS WEBSITE DEVELOPMENT CLUB LOADING</p>
         <p class="text-sm text-gray-400 mt-2">Initializing...</p>
     </div>
+    <script>
+        if (document.cookie.includes('chs_init_done=true')) {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-content').style.opacity = '1';
+        }
+    </script>
     <div id="cursor-light"></div>
     <div id="scroll-progress" class="fixed right-0 top-0 w-1 h-0 bg-gradient-to-b from-blue-500 to-yellow-500 z-40 transition-all duration-300"></div>
     <div id="main-content" class="opacity-0 transition-opacity duration-1000">
@@ -584,7 +595,7 @@
 
     <section id="contact" class="py-20 px-4 bg-black">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-black mb-8 animate-on-scroll">Get In Touch</h2>
+            <h2 class="text-4xl md:text-6xl font-black mb-8 pt-12 animate-on-scroll">Get In Touch</h2>
             <p class="text-xl mb-8 animate-on-scroll" style="color: #DAA520;">Ready to join the CHS Web Development Club? Contact us to learn more!</p>
             
             <div class="contact-button-container animate-on-scroll delay-1">
@@ -608,7 +619,7 @@
                         <path fill="currentColor" d="M224.1 141c-63.6 0-115 51.4-115 115 0 63.6 51.4 115 115 115 63.6 0 115-51.4 115-115 0-63.6-51.4-115-115-115zm0 190.6c-41.9 0-75.6-33.7-75.6-75.6 0-41.9 33.7-75.6 75.6-75.6 41.9 0 75.6 33.7 75.6 75.6 0 41.9-33.7 75.6-75.6 75.6zM370.5 136.8c0 14.9-12 27-26.9 27-14.9 0-26.9-12.1-26.9-27 0-14.9 12-27 26.9-27 14.9 0 26.9 12.1 26.9 27zM398.8 80c-8.4-19.3-24.7-35.6-44-44C334.2 25 299.6 24 224 24s-110.2 1-130.8 12c-19.3 8.4-35.6 24.7-44 44C25 177.8 24 212.4 24 288s1 110.2 12 130.8c8.4 19.3 24.7 35.6 44 44 20.6 11 55.2 12 130.8 12s110.2-1 130.8-12c19.3-8.4 35.6-24.7 44-44 11-20.6 12-55.2 12-130.8s-1-110.2-12-130.8zM224 338c-56.6 0-102.6-46-102.6-102.6S167.4 132.8 224 132.8 326.6 178.8 326.6 235.4 280.6 338 224 338z"/>
                     </svg>
                     <div class="flex-1 text-left">
-                        <div class="text-lg font-semibold" style="color: #DAA520;">Official Instagram</div>
+                        <div class="text-lg md:text-xl font-bold mb-3" style="color: #DAA520;">Official Instagram</div>
                         <a href="https://www.instagram.com/chs_webdevclub/" target="_blank" rel="noopener noreferrer" aria-label="Open CHS WebDev Club Instagram profile" class="text-white font-bold hover:underline">@chs_webdevclub</a>
                         <p class="text-sm text-gray-400 mt-1">Follow for project updates, events, and highlights.</p>
                     </div>
@@ -620,22 +631,22 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 animate-on-scroll delay-2">
                 <div class="bg-gray-800 rounded-lg p-6 card-hover contact-card">
-                    <h3 class="text-lg font-semibold mb-3" style="color: #003D7A;">Email</h3>
-                    <p style="color: #DAA520; word-break: break-all;">chswebdevclub@gmail.com</p>
+                    <h3 class="text-lg md:text-xl font-bold mb-3" style="color: #DAA520;">Email</h3>
+                    <p style="color: #ffffff; word-break: break-all;">chswebdevclub@gmail.com</p>
                 </div>
                 <div class="bg-gray-800 rounded-lg p-6 card-hover contact-card">
-                    <h3 class="text-lg font-semibold mb-3" style="color: #DAA520;">Faculty Sponsor</h3>
-                    <p style="color: #DAA520;">Debra Young</p>
-                    <p style="color: #DAA520; font-size: 0.9rem; word-break: break-all;">dyoung@ccs.k12.in.us</p>
+                    <h3 class="text-lg md:text-xl font-bold mb-3" style="color: #DAA520;">Faculty Sponsor</h3>
+                    <p style="color: #ffffff;">Debra Young</p>
+                    <p style="color: #ffffff; font-size: 0.9rem; word-break: break-all;">dyoung@ccs.k12.in.us</p>
                 </div>
                 <div class="bg-gray-800 rounded-lg p-6 card-hover contact-card">
-                    <h3 class="text-lg font-semibold mb-3" style="color: #003D7A;">Social Media</h3>
-                    <p style="color: #DAA520;">@chs_webdevclub</p>
-                    <p style="color: rgba(218, 165, 32, 0.6); font-size: 0.9rem;">Instagram</p>
+                    <h3 class="text-lg md:text-xl font-bold mb-3" style="color: #DAA520;">Social Media</h3>
+                    <p style="color: #ffffff;">@chs_webdevclub</p>
+                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">Official Instagram</p>
                 </div>
             </div>
 
-            <p style="color: rgba(218, 165, 32, 0.7);">Meetings on Gold Wednesdays, they will take place in room F105.</p>
+            <p class="mt-12" style="color: rgba(218, 165, 32, 0.7);">Meetings on Gold Wednesdays, they will take place in room F105.</p>
         </div>
     </section>
 

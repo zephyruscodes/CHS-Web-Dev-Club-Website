@@ -70,7 +70,7 @@
             object-fit: cover;
             object-position: center;
             opacity: 0.95;
-            filter: brightness(0.45) contrast(1.05) saturate(0.95) blur(0px);
+            filter: brightness(0.45) contrast(1.05) saturate(0.95) blur(4px);
             transform: scale(1.02);
             z-index: 0;
             pointer-events: none;
@@ -127,7 +127,7 @@
             will-change: transform, opacity;
             backface-visibility: hidden;
             border-radius: 50%;
-            filter: blur(2px);
+            filter: blur(4px);
             mix-blend-mode: screen;
             opacity: 0.95;
         }
@@ -549,10 +549,28 @@
             line-height: 1;
         }
         /* Nav buttons are implemented with Tailwind utility classes on the elements. */
+
+        /* Sticky footer layout */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #111827;
+        }
+
+        #main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #main-content > section {
+            flex: 1;
+        }
     </style>
 </head>
 <body class="bg-black text-white font-sans">
-    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50">
+    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50" style="display: none;">
         <img src="images/logo.jpg" alt="CHS Logo" class="w-32 h-32 mb-8 animate-pulse rounded-full">
         <div class="w-64 h-2 bg-gray-700 rounded-full overflow-hidden mb-4">
             <div id="loading-bar" class="h-full bg-gradient-to-r from-blue-500 to-yellow-500 rounded-full transition-all duration-300" style="width: 0%;"></div>
@@ -582,7 +600,7 @@
         </div>
     </nav>
 
-    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-visible">
+    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
         <picture aria-hidden="true">
             <source srcset="images/ClubMembers.jpg" type="image/jpg">
             <source srcset="images/ClubMembers.jpg" type="image/jpg">
@@ -591,8 +609,7 @@
         </picture>
         <div class="absolute inset-0 hero-overlay" style="background: linear-gradient(to right, rgba(0, 61, 122, 0.15), rgba(0,0,0,0.35) 40%, rgba(218, 165, 32, 0.12));"></div>
         <div class="relative z-10 text-center px-8 md:px-4 w-full max-w-7xl">
-            <h1 id="typewriter" class="text-6xl md:text-8xl font-black mb-6 animated-gradient pr-4 animate-on-scroll">
-                The Syntax of Success
+            <h1 id="typewriter" class="text-6xl md:text-8xl font-black animated-gradient pr-4 animate-on-scroll" style="line-height: 1.2;">
             </h1>
             <p class="text-xl md:text-2xl mb-8 animate-on-scroll delay-1 tagline-gradient">Join us to learn, build, and create amazing websites together. No experience required – just bring your passion!</p>
             <p class="text-lg md:text-xl animate-on-scroll delay-2" style="color: rgba(218, 165, 32, 0.8);">We meet on Gold Wednesdays in room F105. Let's code the future!</p>
@@ -600,89 +617,10 @@
                 <a href="about.html" class="join-button text-white px-10 py-4 font-semibold text-lg transition duration-300 animate-on-scroll delay-3">Join the Club</a>
             </div>
         </div>
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
         </div>
     </section>
 
-
-
-    <section id="projects" class="py-20 px-4 bg-black">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-4xl md:text-6xl font-black text-center mb-16 animate-on-scroll">Our Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-gray-800 rounded-lg p-8 shadow-2xl card-hover animate-on-scroll delay-1" style="box-shadow: 0 0 20px rgba(0, 61, 122, 0.2);">
-                    <img src="images/project-old.png" alt="Old project screenshot" class="w-full h-64 object-cover rounded-md mb-6">
-                    <h3 class="text-2xl font-bold mb-4" style="color: #003D7A;">Fire Department Peer Support Group (Old Site)</h3>
-                    <p style="color: #DAA520;">A website built for community support, showcasing our early work in responsive design.</p>
-                </div>
-                <div class="bg-gray-800 rounded-lg p-8 shadow-2xl card-hover animate-on-scroll delay-2" style="box-shadow: 0 0 20px rgba(218, 165, 32, 0.2);">
-                    <img src="images/project-new.png" alt="New project screenshot" class="w-full h-64 object-cover rounded-md mb-6">
-                    <h3 class="text-2xl font-bold mb-4" style="color: #DAA520;">Fire Department Peer Support Group (New Site)</h3>
-                    <p style="color: #DAA520;">An improved version with modern UI/UX, demonstrating our growth in web development skills.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="leaders" class="py-20 px-4 bg-gray-900">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-black mb-16 animate-on-scroll">Meet Our Leaders</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-gray-800 rounded-lg p-6 shadow-lg animate-on-scroll delay-1 card-hover">
-                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #003D7A, #DAA520);">MY</div>
-                    <h3 class="text-xl font-semibold mb-2">Mrs. Young</h3>
-                    <p class="text-gray-400">Club Sponsor</p>
-                </div>
-                <div class="bg-gray-800 rounded-lg p-6 shadow-lg animate-on-scroll delay-2 card-hover">
-                    <div class="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white" style="background: linear-gradient(to right, #DAA520, #FFD700);">KS</div>
-                    <h3 class="text-xl font-semibold mb-2">Yuvraj Kumar Singh</h3>
-                    <p class="text-gray-400">Co-president</p>
-lass="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-6xl font-black mb-4 animate-on-scroll">Our Journey</h2>
-                <p class="text-xl animate-on-scroll delay-1" style="color: #DAA520;">Watch how the CHS Web Development Club has grown and evolved</p>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot">1</div>
-                    <h3>Foundation & Vision</h3>
-                    <ul>
-                        <li>Established the CHS Web Development Club with a mission to teach web development</li>
-                        <li>Created structured curriculum covering HTML, CSS, and JavaScript fundamentals</li>
-                        <li>Built initial club website to showcase our work and vision</li>
-                        <li>Assembled core team of passionate student developers</li>
-                        <li>Set up collaborative development environment for members</li>
-                    </ul>
-                </div>
-
-
-    <section id="contact" class="py-20 px-4 bg-black">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-black mb-8 animate-on-scroll">Get In Touch</h2>
-            <p class="text-xl mb-8 animate-on-scroll" style="color: #DAA520;">Ready to join the CHS Web Development Club? Contact us to learn more!</p>
-            
-            <div class="contact-button-container animate-on-scroll delay-1">
-                <a href="mailto:chswebdevclub@gmail.com" class="animated-gradient-button animated-gradient-button-email">
-                    📧 Email Us
-                </a>
-                <a href="mailto:dyoung@ccs.k12.in.us" class="animated-gradient-button animated-gradient-button-sponsor">
-                    👩‍🏫 Faculty Sponsor
-                </a>
-            </div>
-
-            <div class="max-w-md mx-auto mb-8 animate-on-scroll delay-2">
-                <div class="bg-gray-800 rounded-lg p-6 card-hover contact-card flex items-center gap-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-12 h-12" fill="url(#instGradient)">
-                        <defs>
-                            <linearGradient id="instGradient" x1="0" x2="1">
-                                <stop offset="0" stop-color="#003D7A"/>
-                                <stop offset="1" stop-color="#DAA520"/>
-                            </linearGradient>
-                        </defs>
-                        <path fill="currentColor" d="M224.1 141c-63.6 0-115 51.4-115 115 0 63.6 51.4 115 115 115 63.6 0 115-51.4 115-115 0-63.6-51.4-115-115-115zm0 190.6c-41.9 0-75.6-33.7-75.6-75.6 0-41.9 33.7-75.6 75.6-75.6 41.9 0 75.6 33.7 75.6 75.6 0 41.9-33.7 75.6-75.6 75.6zM370.5 136.8c0 14.9-12 27-26.9 27-14.9 0-26.9-12.1-26.9-27 0-14.9 12-27 26.9-27 14.9 0 26.9 12.1 26.9 27zM398.8 80c-8.4-19.3-24.7-35.6-44-44C334.2 25 299.6 24 224 24s-110.2 1-130.8 12c-19.3 8.4-35.6 24.7-44 44C25 177.8 24 212.4 24 288s1 110.2 12 130.8c8.4 19.3 24.7 35.6 44 44 20.6 11 55.2 12 130.8 12s110.2-1 130.8-12c19.3-8.4 35.6-24.7 44-44 11-20.6 12-55.2 12-130.8s-1-110.2-12-130.8zM224 338c-56.6 0-102.6-46-102.6-102.6S167.4 132.8 224 132.8 326.6 178.8 326.6 235.4 280.6 338 224 338z"/>
-                    </svg>
-                    <div class="flex-1 text-left">
-                        <div class="text-lg font-semibold" style="color: #DAA520;">Official Instagram</div>
+    <script src="something.js"></script>
+</div>
+</body>
+</html>

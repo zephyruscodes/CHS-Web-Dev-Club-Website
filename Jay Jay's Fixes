@@ -1,0 +1,18 @@
+Updates:
+--------------------------------------------------------------
+-Removed cursor light (pretty obnoxious design in my opinion)
+-Separated pages
+-Updated home page styling
+-Updated about section styling
+-Small changes to the styling of all other pages
+
+
+Things to still fix:
+--------------------------------------------------------------
+-Double check initialization screen appears at the right times
+-White bar visible on the new project image despite cropping the image
+-Why is there a cursor for the images when you click on them?
+-Combine two cards for Fire Department stuff into one
+-Add websites for Boba information
+-Glow on the "Join the Club" button doesn't seem to line up?
+-Consider making the the title in the navigation header another way to go to the home page
